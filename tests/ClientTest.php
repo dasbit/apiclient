@@ -9,13 +9,17 @@ use GuzzleHttp\HandlerStack;
 use GuzzleHttp\Psr7\Response;
 use GuzzleHttp\Client as Guzzle;
 
-
 class ClientTest extends \PHPUnit\Framework\TestCase
 {
-    private function getClientInstanceWithMocks(array $mocks = [], $defaultRequestOptions = [], $tokenPlace = []): Client
-    {
+    private function getClientInstanceWithMocks(
+        array $mocks = [],
+        $defaultRequestOptions = [],
+        $tokenPlace = []
+    ): Client {
         foreach ($mocks as $mock) {
-            $responses[] = new Response($mock['code'], $mock['headers'],
+            $responses[] = new Response(
+                $mock['code'],
+                $mock['headers'],
                 is_array($mock['body'])
                     ? json_encode($mock['body'], JSON_HEX_APOS | JSON_HEX_QUOT | JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_LINE_TERMINATORS | JSON_THROW_ON_ERROR)
                     : $mock['body']
@@ -25,9 +29,9 @@ class ClientTest extends \PHPUnit\Framework\TestCase
         return new Client($guzzle, 'http://fake-host.com/', $defaultRequestOptions, $tokenPlace);
     }
 
-    private function arraysAreSimilar(array $a, array $b) : bool
+    private function arraysAreSimilar(array $a, array $b): bool
     {
-        foreach($a as $k => $v) {
+        foreach ($a as $k => $v) {
             if (is_array($v) && !$this->arraysAreSimilar($v, $b[$k])) {
                 return false;
             } else {
@@ -70,7 +74,7 @@ class ClientTest extends \PHPUnit\Framework\TestCase
     public function testRequestsSuccess()
     {
         $body =
-<<<JSONBODY
+        <<<JSONBODY
 {
 	"status": "OK",
 	"active": "1",
