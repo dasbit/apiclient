@@ -10,5 +10,6 @@
     <arg value="s" />
 
     <!-- Use the PSR2 Standard-->
-    <rule ref="PSR2" />
+    <rule ref="PSR12" />
+    <file>src</file>
 </ruleset>

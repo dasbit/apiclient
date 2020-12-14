@@ -66,8 +66,12 @@ class Client
      * @param array $defaultRequestOptions
      * @param array $tokenPlace
      */
-    public function __construct(GuzzleClient $http, string $host, array $defaultRequestOptions = [], array $tokenPlace = [])
-    {
+    public function __construct(
+        GuzzleClient $http,
+        string $host,
+        array $defaultRequestOptions = [],
+        array $tokenPlace = []
+    ) {
         $this->http = $http;
         $this->host = $host;
         if (!empty($defaultRequestOptions)) {
@@ -83,7 +87,7 @@ class Client
      *
      * @param string|null $token
      */
-    public function setToken(?string $token) : void
+    public function setToken(?string $token): void
     {
         $this->token = $token;
     }
@@ -93,7 +97,7 @@ class Client
      *
      * @return string|null
      */
-    public function getToken() : ?string
+    public function getToken(): ?string
     {
         return $this->token;
     }
@@ -106,7 +110,7 @@ class Client
      * @return bool
      * @throws ClientException
      */
-    public function authenticate($login, $password) : bool
+    public function authenticate($login, $password): bool
     {
         //todo realize more flexible
         $res = $this->request('get', 'auth', [
@@ -129,7 +133,7 @@ class Client
      * @return array|null
      * @throws ClientException
      */
-    public function request($method, $path, array $options = []) : ?array
+    public function request($method, $path, array $options = []): ?array
     {
         $options = array_merge_recursive($this->defaultRequestOptions, $options);
         try {
@@ -180,8 +184,10 @@ class Client
      */
     protected function handleResponseBody(string $body, $headers = [])
     {
-        if (isset($headers['Content-Type'])
-            && in_array('application/json', $headers['Content-Type'], true)) {
+        if (
+            isset($headers['Content-Type'])
+            && in_array('application/json', $headers['Content-Type'], true)
+        ) {
             return json_decode($body, true, 512, JSON_THROW_ON_ERROR);
         }
         return $body;
